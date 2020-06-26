@@ -7,7 +7,7 @@ const CreateExecise = () => {
   const [values,setValues]=useState({
       uname:'',
       desc:'',
-      num:0,
+      duration:0,
       date:new Date(),
       user:[]
   })
@@ -17,9 +17,12 @@ const CreateExecise = () => {
  axios.get('http://localhost:5000/user').then(res=>{
 
     console.log(res.data)
+    let response=res.data.map(user=>user.username)
+    response.unshift(null)
     setValues({
         ...values,
-        user:res.data.map(user=>user.username)
+        //user:res.data.map(user=>user.username)
+         user:response
     })
     
  })
@@ -44,12 +47,13 @@ const submit=e=>{
     const data={
         username:values.uname,
         description:values.desc,
-        duration:values.num,
+        duration:values.duration,
         date:values.date
     }
     
     axios.post('http://localhost:5000/exercise/add',data).then((res)=>{
-        console.log(res)
+      alert('Exercise added')
+               
     }).catch(err=>console.log(err))
 
 }
@@ -68,15 +72,15 @@ const submit=e=>{
           </div>
           <div className='form-group'>
               <label>Description</label>
-              <input type='text' className='form-control' name='desc' onChange={change}/>
+              <input type='text' className='form-control' name='desc' value={values.desc} onChange={change}/>
           </div>
           <div className='form-group'>
           <label>Duration</label>
-              <input type='number' className='form-control' name='num' onChange={change}/>
+              <input type='number' className='form-control' name='duration' value={values.duration} onChange={change}/>
           </div>
           <div className='form-group'>
           <label>Date</label>
-              <input type='date' className='form-control' name='date' onChange={change}/>
+              <input type='date' className='form-control' name='date' value={values.date} onChange={change}/>
           </div>
 
           <div className='form-group '>

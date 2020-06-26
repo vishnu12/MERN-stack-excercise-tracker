@@ -9,7 +9,7 @@ const Editlist = (props) => {
       username:'',
       description:'',
       duration:0,
-      date:'',
+      date:new Date(),
       users:[]
   });
 
@@ -22,7 +22,7 @@ const Editlist = (props) => {
             username:res.data.username,
             description:res.data.description,
             duration:res.data.duration,
-            date:res.data.date
+            date:new Date(res.data.date)
 
         })
     })
